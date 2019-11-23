@@ -1,0 +1,285 @@
+/****************************
+ * author : Valeri Rabiakin
+ * task : maman12 -Date
+ * 
+ * 
+ * 
+ ***************************/
+ 
+ 
+ public class Date{
+     
+   
+  // define  varibles***************************************************************   
+  int _day;
+  int _month;
+  int _year;
+   
+  // define final varibles *********************************************************
+ private final int JAN=1,FEB=2,MAR=3,APR=4,MAY=5,JUN=6,JUL=7,AUG=8,SEP=9,OCT=10,NOV=11,DEC=12;
+    
+ private final int MIN_YEAR=1000,MAX_YEAR=9999;
+ private final int DEFAULT_DAY=01,DEFAULTE_MONTH=01,DEFAULT_YEAR=2000,DEFAULT_DATE=(01/01/2000);
+ private final int SHORT_MONTH=30,LONG_MONTH=31,DAYS_IN_FEB=28,DAYS_FEB_LEAP_YEAR=29;
+ private int MAX_DAYS_MONTH;
+ private int LEAP_YEAR  ;
+ 
+   public Date( ){
+     _day = DEFAULT_DAY;
+     _month = DEFAULTE_MONTH;
+     _year = DEFAULT_YEAR;
+     Date d1 = new Date(1,1,2000);
+       
+    }
+ /* constructor Date
+  * 
+  * chek if the given parameters are valid
+  * @param day - chek valid day in month (long monthn, short month, FEB month )
+  * @param month - chek valid month in year JAN-DEC(1-12)
+  * @param year - chek if the year between 1000-10000
+  */
+ 
+  public  Date(int day,int month,int year){
+      
+     
+      //check if the date is valid days in month and if the year is leap year or not*************
+      
+       if  ((_month==FEB)&&(_day>0&&_day<29)) {
+   
+         day = _day;
+         month = _month;
+         year = _year;
+         int  DAYS_IN_FEB;
+    
+      } else if ((_month==APR||_month==JUN||_month==SEP||_month==NOV) && (_day> 0 && _day<31)){
+        
+       
+         day = _day;
+         month = _month;
+         year = _year;
+      
+        int SHORT_MONTH; 
+    } else if ((_day>0 && _day<32)&&(_month>0 && _month<13)&&(_year>999 && _year<10000)){
+    
+        day = _day;
+        month = _month;
+        year = _year;
+        int LONG_MONTH;
+    
+    } else if((_year%4==0)&& !(_year%100==0) && (_year%400==0)&&(_month==FEB&&_day>0&&_day>30)){
+    
+    _year = LEAP_YEAR;
+    
+    
+    
+    }
+    else {
+        //default date 01/01/2000
+      day = DEFAULT_DAY;
+     month = DEFAULTE_MONTH;
+     year = DEFAULT_YEAR;
+       
+    }
+   
+
+ }
+      
+    
+  // copy constructor
+    public Date(Date other){
+
+
+        this._day = other._day;
+        this._month = other._month;
+        this._year = other._year;
+
+    }
+     //check the date after if valid 
+    public boolean after(Date other){
+       if (this._year>other._year) return true ;
+       if(this._year<other._year) return false;
+       
+       if (this._month>other._month) return true;
+       if (this._month<other._month) return false;
+       
+       if (this._day>other._day) return true;
+         
+      return false;
+    }
+    
+       public boolean before(Date other){
+        
+       if (this._year<other._year) return true ;
+       if(this._year>other._year) return false;
+       
+       if (this._month<other._month) return true;
+       if (this._month>other._month) return false;
+       
+       if (this._day<other._day) return true;
+       
+       
+       return false;
+  
+      }
+      
+       private int calculateDate(int day,int month,int year){
+        
+        if(month<3){
+        
+        year--;
+        month = month+12;
+      
+        
+        } return 365*year+year/4-year/100+year/400+((month+1)*306)/10+(day-62);
+        
+        
+        
+        }
+      /*find the in week
+       * @param D - number day in week
+       * @param M - number of the month
+       * @param Y - last 2 digit in year
+       * @param C - first 2 digits in year
+       */   
+        public int dayInWeek(){
+        
+           int D = _day;
+           int JAN=13;
+            int FEB=14;
+           int M = _month;
+           int Y =(_year/100);
+           int C = (_year%1000);
+        
+          int day = (D+(26*(M+1))/10+Y+Y/4+C/4-2*C)%7;  
+      
+      if(day==1){
+        
+        int Sunday=1;
+    } else if(day==2){
+        
+        int monday=2;
+    } else if(day==3){ 
+        
+        int Tuesday=3;
+        }else if(day==4){
+        int Wednesday=4;
+        }else if(day==5){
+        int Thursday=5;
+        }else if(day==6){
+        int Friday=6;
+        }else if (day==0){
+        int Saturday=0;
+        }else {
+        int date = DEFAULT_DATE;
+        }
+        
+        
+        return day;
+        
+        } 
+   
+    
+       public int getDay(){
+           
+           
+     
+        return _day;
+  
+      }
+        
+       public int getMonth(){
+     
+        return _month;
+  
+      }  
+    
+       public int getYear(){
+     
+        return _year;
+  
+      }
+    
+     
+
+
+       public void setYear(int yearToSet){
+        this._year = yearToSet;
+      }
+    
+       public void setMonth(int monthToSet){
+        this._month = monthToSet;
+      }
+
+       public void setDay(int dayToSet){
+        this._day = dayToSet;
+      }
+      
+      public Date tomorrow(){
+        
+        
+        
+         if(_day>0&&_day>32){
+             _day = _day-1;
+         }  else if (_day>31){
+            _month = _month-1;
+        }
+            else if (_month>12){
+             _year = _year-1;
+        
+        }
+        
+        return Date.this;
+        }
+        
+        
+        
+        
+      
+      
+      
+       /*
+       * Return String representation of this date
+       * @return String representation of this date
+       */
+        public String toString(){
+        
+          return _day+"/"+_month+"/"+_year;  
+        
+       }
+       
+    
+ }   
+   
+
+
+
+
+  
+ 
+ 
+  
+  
+ 
+    
+ 
+    
+       
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+
+    
+    
+   
